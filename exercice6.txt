@@ -1,0 +1,19 @@
+Exercice 6:
+1) $ mysql -uroot -p
+2) mysql> create database college;
+3) mysql> grant all on college.* to newuser@localhost;
+4) mysql> exit
+5) $ mysql college < college.sql
+6) $ mysql
+
+
+Exercices:
+​
+1) Retrieve the name, city and grade point average (GPA) of students, greater than or  equal to 3.7​
+	SELECT stdFirstName, stdCity, stdGPA FROM student WHERE stdGPA >3.7;
+	
+2) List the name and hiring date of faculty hired in 1999 or 2000​
+	SELECT concat(FacFirstName,' ',FacLastName) AS facultyname, FacHireDate FROM faculty WHERE FacHireDate BETWEEN '1999-01-01' AND '2000-12-31';
+3) List the offer number, course number and faculty Social Security number for course  offerings scheduled in fall 2005 or winter 2006​
+
+4) List the offering number, course number, days and time of offerings containing the  words 'database' or 'programming' in the course description and taught in spring  2006.
