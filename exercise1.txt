@@ -1,0 +1,18 @@
+Exercice 1
+1) create a folder called exercices
+mkdir exercices
+2) copy some files in the folder
+3) got to the exercices folder
+4) Initialize the local directory as a Git repository.
+git init
+5) add some file to you new local repository
+git add *.sql
+6) Commit the files that you've staged in your local repository.
+git commit -m 'Add all *.sql file to git'
+7) add the URL for the remote repository where your local repostory will be pushed. sets the new remote
+git remote add exercices https://github.com/carolinevdb/exercices
+8) Push the changes in your local repository to GitHub.
+git remote -v
+9) Pushes the changes in your local repository up to the remote repository you specified as the origin
+git push exercices master
+
