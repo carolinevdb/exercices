@@ -23,7 +23,7 @@ Exercices:
 	mysql> select type, price FROM room;
 	mysql> select type, price FROM room WHERE type='double' OR type='family';
 	mysql> select type, price FROM room WHERE type='double' OR type='family' AND price < 40.00 ORDER BY price ASC;
-
+-
 3) List the bookings for which no date_to has been specified.​
 	mysql> select * FROM booking;
 	mysql> SELECT * FROM booking WHERE dateto IS NULL;
@@ -34,10 +34,41 @@ Exercices:
 5) What is the total revenue per night from all double rooms?​
 	mysql> SELECT SUM(price) FROM room;
 	mysql> SELECT SUM(price) AS total_revenue FROM room WHERE type='double';
+	
+6) How many different guests have made  bookings for August?
+	mysql> SELECT COUNT(DISTINCT(guestNo)) from booking;
+	mysql> SELECT COUNT(DISTINCT(guestNo)) FROM booking WHERE dateto >= CONCAT(year(curdate()), '-08') AND datefrom < concat(year(curdate()), '-09') OR dateto is NULL;
+
+	mysql> SELECT COUNT(DISTINCT(guestNo)) from booking WHERE (datefrom>='2004-08-01' AND datefrom <='2004-08-31') OR (dateto >='2004-08-01' AND dateto<='2004-08-31');
+	
+7) List the price and type of all rooms at the The Tower Hotel.​
+	 SELECT price, type FROM room, hotel WHERE hotelname='The Tower Hotel';
+
+8) List all guests currently staying at the The Tower Hotel.​
+	mysql> SELECT guestname FROM guest, hotel WHERE hotelname='The Tower Hotel';
+
+9) List the details of all rooms at the The Tower Hotel, including the name of the guest  staying in the room, if the room is occupied.​
+	SELECT * FROM room JOIN (SELECT guest.guestname, hotel.hotelno, booking.roomno FROM guest, booking, hotel WHERE guest.guestno=booking.guestno AND booking.hotelno=hotel.hotelno AND hotelname='The Tower Hotel' AND datefrom <= CURDATE() AND dateto >= CURDATE()) AS ID ON room.hotelno=ID.hotelno AND room.roomno=ID.roomno;
+
+
+10) What is the total income from bookings for the The Tower Hotel today?​
+	mysql> SELECT SUM(price) FROM booking, room, hotel WHERE room.hotelno=hotel.hotelno AND room.roomno=booking.roomno AND hotelname='The Tower Hotel';
+
+
+11) List the rooms that are currently unoccupied at the The Tower Hotel.​
+	SELECT * FROM room JOIN hotel ON room.hotelno=hotel.hotelno WHERE hotel.hotelname='The Tower Hotel';
+
+12) What is the lost income from unoccupied rooms at the The Tower Hotel?​
+	SELECT SUM(price) FROM room r, hotel h WHERE r.hotelno=h.hotelno AND h.hotelname='The Tower Hotel' AND roomno NOT IN (SELECT roomno FROM booking b, hotel h where (datefrom <= curdate() AND dateto >=curdate()) AND b.hotelno=h.hotelno AND r.roomno=b.roomno and h.hotelname='The Tower Hotel');
+13) List the number of rooms in each hotel in London.​
+	mysql> SELECT hotelno, COUNT(roomno) FROM room GROUP BY hotelno;
+
+14) What is the most commonly booked room type for each hotel in London?​
+	SELECT MAX(type) FROM (SELECT type, COUNT(type) FROM booking, hotel, room WHERE room.roomno=booking.roomno AND booking.hotelno=hotel.hotelno AND city='London' GROUP BY type) room;
+	
+15) Update the price of all rooms by 5%.
+	mysql> update room set price=price*1.05;
 
 
 
-
-
-6) How many different guests have made bookings for August?
 
