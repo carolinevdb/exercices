@@ -15,5 +15,42 @@ Exercices:
 2) List the name and hiring date of faculty hired in 1999 or 2000​
 	SELECT concat(FacFirstName,' ',FacLastName) AS facultyname, FacHireDate FROM faculty WHERE FacHireDate BETWEEN '1999-01-01' AND '2000-12-31';
 3) List the offer number, course number and faculty Social Security number for course  offerings scheduled in fall 2005 or winter 2006​
+	mysql> SELECT OfferNo, courseNo, facssn FROM offering WHERE (offterm='fall'AND offyear=2005) OR (offterm='winter'AND offyear=2006);
 
 4) List the offering number, course number, days and time of offerings containing the  words 'database' or 'programming' in the course description and taught in spring  2006.
+	SELECT offerno, offering.courseno, offterm, offtime, offdays, course.crsDesc from offering, course WHERE offterm='spring' and offyear=2006 and offering.courseno=course.courseno and (course.crsdesc like '%database%' OR course.crsdesc like '%programming%');
+
+5) List the offer number, course number and name of the instructor of IS course  offerings scheduled in fall 2005 taught by assistant professors​
+	SELECT offerno, offering.courseno, faculty.facfirstname, faculty.faclastname from offering, faculty WHERE offering.offterm='fall' AND offering.offyear=2005 AND offering.Facssn = faculty.facssn and facrank='asst' and offering.courseno like "IS%";
+	
+6) Summarize the averageGPA of students by major.​
+	mysql> SELECT stdmajor, AVG(stdGPA) as averageGPA from student group by stdmajor;
+	
+7) Summarize the number of offerings and unique courses by year.​
+	mysql> SELECT offyear, COUNT(*) AS NrofOfferings, COUNT(DISTINCT Courseno) as NrofCourses FROM offering group by offyear;
+	
+8) Summarize the average GPA of upper-division (junior or senior) students by major.  Only list the major with average GPA greater than 3.1.​
+	SELECT stdmajor, avg(stdgpa) as avg from student where stdclass='JR' OR stdclass='SR' group by stdmajor having avg>3.1;
+
+9) Summarize the minimum and maximum GPA of students by major and class.​
+	SELECT min(stdgpa), max(stdgpa) from student group by stdmajor, stdclass;
+
+10) Summarize the number of IS course offering by course description.​
+	SELECT crsdesc, count(*) as offeringnr from course, offering where course.courseno=offering.courseno and offering.courseno like 'IS%' GROUP by crsdesc;
+
+11) List the GPA, name, city and state of juniors, lowest GPA first.​
+	SELECT stdgpa, concat(stdfirstname,' ',stdlastname) as studentname, stdcity from student where stdclass='JR' order by stdgpa DESC;
+
+12) List the unique city and state combination in the Faculty table.​
+	SELECT DISTINCT(faccity), facstate from faculty;
+
+13) List the student name, offering number and grade of students who have a grade >=​3.5 in a course offering.​
+	SELECT concat(stdfirstname,' ',stdlastname) as Student_Name, stdGPA from student, enrollment where Enrgrade >=3.5 and student.stdSSN=enrollment.stdSSN;
+
+14) List the names of students (without duplicates) who have grades >= 3.5 in a course  offering.​
+	SELECT distinct stdfirstname,stdlastname, stdGPA from student, enrollment where Enrgrade >=3.5 and student.stdSSN=enrollment.stdSSN;
+
+15) List Bob Norbert's course schedule in spring 2006. For each course, list the offering  number, course number, days, location, time and faculty name.
+	SELECT offering.OfferNo, offering.CourseNo, OffDays, OffLocation, OffTime, FacFirstName, FacLastName FROM faculty, offering, enrollment, student WHERE offering.OfferNo = enrollment.OfferNo AND student.StdSSN = enrollment.StdSSN AND faculty.FacSSN = offering.FacSSN AND OffYear = '2006' AND OffTerm = 'SPRING' AND StdFirstName = 'BOB' AND StdLastName = 'NORBERT';
+
+
