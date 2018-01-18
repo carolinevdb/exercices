@@ -1,0 +1,17 @@
+Exercice 3:the process of normalizing the following data to first (1NF), second (2NF), third (3NF) and BCNF.​
+Patient No → Full Name  
+Ward No → Ward Name​
+Drug No → Name, Description, Dosage,​Method of Admin​
+Patient No, Drug No, Start Date → Units per Day,  Finish date
+
+
+1NF	form(patientNo, patientName, BedNo, WardNo, WardName, DrugNo,DrugName, DrugDescription, DrugDosage, DrugAdm, UnitDay, StartDate, FinishDate)
+ 	
+2NF 	patient(patientNo, Patientname)
+	form(Patientno, BedNo, WardNo, WardName, DrugNo,StartDate, FinishDate, UnitDay)
+	drug(DrugNo, DrugName, DrugDescription, DrugDosage,DrugAdm)
+3NF	patient(patientNo, Patientname)
+	form(Patientno, BedNo, WardNo, DrugNo,StartDate, FinishDate, UnitDay)
+	drug(DrugNo, DrugName, DrugDescription, DrugDosage,DrugAdm)
+	ward(wardNo, wardName)
+BCNF	3NF
