@@ -1,0 +1,22 @@
+EXECISE 2: normalize to BCNF
+
+1) List the attributes of the enity, identify the main key - this must be unique, identify the repeatin group of attributes and identify the key from the repeating group	
+UNF	app(stafNo, dentistName, patienNo, patientName, appdate, time, surgeryNo)
+
+2) As per the rule of first normal form, an attribute (column) of a   table cannot hold multiple values.
+1NF	app(staffNo, appdate, time, patienNo, patienName)
+	surgery(staffNo, appdate, sugeryNo)
+	dentist(staffNo, dentistName)
+
+3) No non-prime attribute is dependent on the proper subset of any candidate key of table.
+2NF	1NF
+
+4) Transitive functional dependency(indirectly formed by two functional dependencies) of non-prime attribute on any super key should be removed.
+3NF	app(staffNo, appdate, time, patienNo)
+	surgery(staffNo, appdate, sugeryNo)
+	dentist(staffNo, dentistName)
+	patient(patientNo, patienName)
+
+5) Any attribute on which some other attribute is full functionally dependent = determinant, every determinant is a candidate key.  
+BCNF	3NF
+
