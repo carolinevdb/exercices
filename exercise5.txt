@@ -1,0 +1,43 @@
+Exercise 5: Create a new database called vacation​
+1) Log in with root user
+	$ mysql -uroot -p
+2) create a new database called vacation
+	myql> CREATE database vacation;
+3) Grand all acces to newuser@localhost
+	myql> GRANT ALL ON vacation.* TO newuser@localhost;
+	myql> exit
+4) import the DB in the newly created DB
+	$ mysql vacation < vacation.sql
+	$ mysql
+5) see the result
+	myql> SHOW DATABASES;
+
+Exercices:
+
+1) List the names and addresses of all guests in London, alphabetically ordered by  name.​
+	mysql> SELECT * FROM hotel;
+	mysql> SELECT * FROM hotel WHERE city = "London";
+	mysql> SELECT guestname, guestaddress FROM hotel, guest WHERE city = "London" ORDER BY guestname ASC;
+
+2) List all double or family rooms with a price below £40.00 per night, cheapest first.​
+	mysql> select type, price FROM room;
+	mysql> select type, price FROM room WHERE type='double' OR type='family';
+	mysql> select type, price FROM room WHERE type='double' OR type='family' AND price < 40.00 ORDER BY price ASC;
+
+3) List the bookings for which no date_to has been specified.​
+	mysql> select * FROM booking;
+	mysql> SELECT * FROM booking WHERE dateto IS NULL;
+
+4) What is the average price of a room?​
+	mysql> SELECT AVG(price) AS average_price FROM room;
+
+5) What is the total revenue per night from all double rooms?​
+	mysql> SELECT SUM(price) FROM room;
+	mysql> SELECT SUM(price) AS total_revenue FROM room WHERE type='double';
+
+
+
+
+
+6) How many different guests have made bookings for August?
+
